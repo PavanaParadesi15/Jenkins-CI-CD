@@ -62,3 +62,46 @@ usermod -aG docker jenkins  # creates a group called docker and jenkins is part 
 usermod -aG docker ubuntu  # granting ubuntu user permissions to access Docker
 systemctl restart docker 
 ```
+
+
+### Steps to change Jenkins port from 8080 to 8090 (or any other port)
+
+* First stop the jenkins 
+``` 
+sudo systemctl restart jenkins
+```
+1. Locate the Jenkins Configuration File
+
+The port number is usually configured in the Jenkins service file or the Jenkins default configuration file.
+For Debian/Ubuntu-based systems:
+
+The configuration file is typically located at:
+```
+sudo nano /etc/default/jenkins
+```
+* Find the line: HTTP_PORT=8080 , Change 8080 to 8090
+Save and exit the file
+
+Update Firewall Rules (if needed)
+If you use a firewall, allow the new port:
+```
+sudo ufw allow 8090
+sudo lsof -i -P -n           // list all the services and their ports
+```
+Double-check the configuration file to ensure the port was changed correctly.
+Verify the HTTP_PORT setting:
+```
+grep HTTP_PORT /etc/default/jenkins
+```
+Review Jenkins Systemd Service File. Open the Jenkins service file:
+```
+sudo nano /lib/systemd/system/jenkins.service
+```
+Change the jenkins Environment port to = 8090 (whatever port needed)
+
+Then reload daemon and start/restart jenkins
+```
+sudo systemctl daemon-reload
+sudo systemctl restart jenkins
+```
+
