@@ -63,6 +63,12 @@ usermod -aG docker ubuntu  # granting ubuntu user permissions to access Docker
 systemctl restart docker 
 ```
 
+Commands to create Docker Image and run Docker container and push image to docker registry
+```
+docker build -t pavanap5/imagename:tag .                // pavanap5 is the docker registry name
+docker run -p <container port>:<host port> -it pavanap5/imagename:tag
+docker push pavanap5/imagename:tag
+```
 
 ### Steps to change Jenkins port from 8080 to 8090 (or any other port)
 
